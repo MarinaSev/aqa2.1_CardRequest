@@ -82,16 +82,4 @@ public class FormRequestTest {
         assertEquals(expexted, actualText);
     }
 
-    @Test
-    public void shouldSkipAgreeent() {
-        driver.get("http://localhost:9999");
-        driver.findElement(By.cssSelector("[type='text']")).sendKeys("Иванов Иван");
-        driver.findElement(By.cssSelector("[type='tel']")).sendKeys("+79991112233");
-//        driver.findElement(By.className("checkbox__box")).click();
-        driver.findElement(By.tagName("button")).click();
-        String actualText = driver.findElement(By.cssSelector(".input_invalid")).get;
-        String expexted = "color=#ff5c5c!important";
-        assertEquals(expexted, actualText);
-    }
-
 }
