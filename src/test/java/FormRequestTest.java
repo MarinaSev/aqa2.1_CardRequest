@@ -8,7 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import static io.github.bonigarcia.wdm.WebDriverManager.chromedriver;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FormRequestTest {
@@ -37,13 +36,13 @@ public class FormRequestTest {
 
     @Test
     public void shouldSendForm() {
-        driver.get("http://localhost:9999/");
+        driver.get("http://localhost:9999");
         driver.findElement(By.cssSelector("[type='text']")).sendKeys("Иванов Иван");
         driver.findElement(By.cssSelector("[type='tel']")).sendKeys("+79991112233");
         driver.findElement(By.className("checkbox__box")).click();
         driver.findElement(By.tagName("button")).click();
 
-        String actualText = driver.findElement(By.id("order-succsess")).getText().trim();
+        String actualText = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText().trim();
         String expexted = "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
         assertEquals(expexted, actualText);
     }
