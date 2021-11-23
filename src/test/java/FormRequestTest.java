@@ -47,4 +47,51 @@ public class FormRequestTest {
         assertEquals(expexted, actualText);
     }
 
+    @Test
+    public void shouldInputNameInEnglish() {
+        driver.get("http://localhost:9999");
+        driver.findElement(By.cssSelector("[type='text']")).sendKeys("Ivanov Ivan");
+        driver.findElement(By.tagName("button")).click();
+        String actualText = driver.findElement(By.cssSelector(".input__sub")).getText();
+        String expexted = "Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.";
+        assertEquals(expexted, actualText);
+    }
+
+    @Test
+    public void shouldInputNameWithHyphen() {
+        driver.get("http://localhost:9999");
+        driver.findElement(By.cssSelector("[type='text']")).sendKeys("Иванов-Апостол Иван");
+        driver.findElement(By.cssSelector("[type='tel']")).sendKeys("+79991112233");
+        driver.findElement(By.className("checkbox__box")).click();
+        driver.findElement(By.tagName("button")).click();
+
+        String actualText = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText().trim();
+        String expexted = "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
+        assertEquals(expexted, actualText);
+    }
+
+    @Test
+    public void shouldInputWrongTel() {
+        driver.get("http://localhost:9999");
+        driver.findElement(By.cssSelector("[type='text']")).sendKeys("Иванов Иван");
+        driver.findElement(By.cssSelector("[type='tel']")).sendKeys("+799911122333");
+        driver.findElement(By.className("checkbox__box")).click();
+        driver.findElement(By.tagName("button")).click();
+        String actualText = driver.findElement(By.cssSelector(".input_invalid .input__sub")).getText();
+        String expexted = "Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.";
+        assertEquals(expexted, actualText);
+    }
+
+    @Test
+    public void shouldSkipAgreeent() {
+        driver.get("http://localhost:9999");
+        driver.findElement(By.cssSelector("[type='text']")).sendKeys("Иванов Иван");
+        driver.findElement(By.cssSelector("[type='tel']")).sendKeys("+79991112233");
+//        driver.findElement(By.className("checkbox__box")).click();
+        driver.findElement(By.tagName("button")).click();
+        String actualText = driver.findElement(By.cssSelector(".input_invalid")).get;
+        String expexted = "color=#ff5c5c!important";
+        assertEquals(expexted, actualText);
+    }
+
 }
