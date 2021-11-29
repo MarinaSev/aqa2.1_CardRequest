@@ -11,6 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CheckboxValidationTest {
     private WebDriver driver;
@@ -42,8 +43,7 @@ public class CheckboxValidationTest {
         driver.findElement(By.cssSelector("[type='tel']")).sendKeys("+79991112233");
         driver.findElement(By.tagName("button")).click();
 
-        String actualText = driver.findElement(By.cssSelector(".input_invalid .checkbox__text")).getText();
-        String expexted = "Я соглашаюсь с условиями обработки и использования моих персональных данных и разрешаю сделать запрос в бюро кредитных историй";
-        assertEquals(expexted, actualText);
+        boolean actual = driver.findElement(By.cssSelector(".input_invalid .checkbox__box")).isDisplayed();
+        assertTrue(actual);
     }
 }
