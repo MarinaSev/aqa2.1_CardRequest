@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -43,17 +44,22 @@ public class NameValidationTest {
     public void shouldInputNameInEnglish() {
         driver.findElement(By.cssSelector("[type='text']")).sendKeys("Ivanov Ivan");
         driver.findElement(By.tagName("button")).click();
-        String actualText = driver.findElement(By.cssSelector(".input_invalid .input__top")).getText();
-        String expexted = "Фамилия и имя";
+
+        WebElement element = driver.findElement(By.className("input_invalid"));
+        String actualText = element.findElement(By.cssSelector("[data-test-id='name'] .input__sub")).getText();
+        String expexted = "Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.";
         assertEquals(expexted, actualText);
-    }
+
+        }
 
     @Test
     public void shouldInputNameInChineese() {
         driver.findElement(By.cssSelector("[type='text']")).sendKeys("灿木");
         driver.findElement(By.tagName("button")).click();
-        String actualText = driver.findElement(By.cssSelector(".input_invalid .input__top")).getText();
-        String expexted = "Фамилия и имя";
+
+        WebElement element = driver.findElement(By.cssSelector("[data-test-id='name']"));
+        String actualText = element.findElement(By.cssSelector(".input_invalid .input__sub")).getText();
+        String expexted = "Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.";
         assertEquals(expexted, actualText);
     }
 
@@ -61,8 +67,10 @@ public class NameValidationTest {
     public void shouldInputNameInArabian() {
         driver.findElement(By.cssSelector("[type='text']")).sendKeys("محمود الحسين");
         driver.findElement(By.tagName("button")).click();
-        String actualText = driver.findElement(By.cssSelector(".input_invalid .input__top")).getText();
-        String expexted = "Фамилия и имя";
+
+        WebElement element = driver.findElement(By.cssSelector("[data-test-id='name']"));
+        String actualText = element.findElement(By.cssSelector(".input_invalid .input__sub")).getText();
+        String expexted = "Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.";
         assertEquals(expexted, actualText);
     }
 
@@ -70,8 +78,10 @@ public class NameValidationTest {
     public void shouldInputNameInNumbers() {
         driver.findElement(By.cssSelector("[type='text']")).sendKeys("+79993332211");
         driver.findElement(By.tagName("button")).click();
-        String actualText = driver.findElement(By.cssSelector(".input_invalid .input__top")).getText();
-        String expexted = "Фамилия и имя";
+
+        WebElement element = driver.findElement(By.cssSelector("[data-test-id='name']"));
+        String actualText = element.findElement(By.cssSelector(".input_invalid .input__sub")).getText();
+        String expexted = "Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.";
         assertEquals(expexted, actualText);
     }
 
@@ -79,16 +89,20 @@ public class NameValidationTest {
     public void shouldInputNameInLettersAndNumbers() {
         driver.findElement(By.cssSelector("[type='text']")).sendKeys("Алиса13 Петрова");
         driver.findElement(By.tagName("button")).click();
-        String actualText = driver.findElement(By.cssSelector(".input_invalid .input__top")).getText();
-        String expexted = "Фамилия и имя";
+
+        WebElement element = driver.findElement(By.cssSelector("[data-test-id='name']"));
+        String actualText = element.findElement(By.cssSelector(".input_invalid .input__sub")).getText();
+        String expexted = "Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.";
         assertEquals(expexted, actualText);
     }
 
     @Test
     public void shouldSendEmptyNameField() {
         driver.findElement(By.tagName("button")).click();
-        String actualText = driver.findElement(By.cssSelector(".input_invalid .input__top")).getText();
-        String expexted = "Фамилия и имя";
+
+        WebElement element = driver.findElement(By.cssSelector("[data-test-id='name']"));
+        String actualText = element.findElement(By.cssSelector(".input_invalid .input__sub")).getText();
+        String expexted = "Поле обязательно для заполнения";
         assertEquals(expexted, actualText);
     }
 
@@ -96,6 +110,7 @@ public class NameValidationTest {
     public void shouldInputNameWithHyphen() {
         driver.findElement(By.cssSelector("[type='text']")).sendKeys("Анна-Ева Петрова");
         driver.findElement(By.tagName("button")).click();
+
         String actualText = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText().trim();
         String expexted = "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
         assertEquals(expexted, actualText);
@@ -105,6 +120,7 @@ public class NameValidationTest {
     public void shouldInputSurnameWithHyphen() {
         driver.findElement(By.cssSelector("[type='text']")).sendKeys("Анна Петрова-Водкина");
         driver.findElement(By.tagName("button")).click();
+
         String actualText = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText().trim();
         String expexted = "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
         assertEquals(expexted, actualText);

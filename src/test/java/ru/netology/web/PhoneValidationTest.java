@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -44,8 +45,9 @@ public class PhoneValidationTest {
         driver.findElement(By.cssSelector("[type='tel']")).sendKeys("+799911122333");
         driver.findElement(By.tagName("button")).click();
 
-        String actualText = driver.findElement(By.cssSelector(".input_invalid .input__top")).getText();
-        String expexted = "Мобильный телефон";
+        WebElement element = driver.findElement(By.cssSelector("[data-test-id='phone']"));
+        String actualText = element.findElement(By.cssSelector(".input_invalid .input__sub")).getText();
+        String expexted = "Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.";
         assertEquals(expexted, actualText);
     }
 
@@ -54,8 +56,9 @@ public class PhoneValidationTest {
         driver.findElement(By.cssSelector("[type='tel']")).sendKeys("+7999111223");
         driver.findElement(By.tagName("button")).click();
 
-        String actualText = driver.findElement(By.cssSelector(".input_invalid .input__top")).getText();
-        String expexted = "Мобильный телефон";
+        WebElement element = driver.findElement(By.cssSelector("[data-test-id='phone']"));
+        String actualText = element.findElement(By.cssSelector(".input_invalid .input__sub")).getText();
+        String expexted = "Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.";
         assertEquals(expexted, actualText);
     }
 
@@ -64,8 +67,9 @@ public class PhoneValidationTest {
         driver.findElement(By.cssSelector("[type='tel']")).sendKeys("89991112233");
         driver.findElement(By.tagName("button")).click();
 
-        String actualText = driver.findElement(By.cssSelector(".input_invalid .input__top")).getText();
-        String expexted = "Мобильный телефон";
+        WebElement element = driver.findElement(By.cssSelector("[data-test-id='phone']"));
+        String actualText = element.findElement(By.cssSelector(".input_invalid .input__sub")).getText();
+        String expexted = "Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.";
         assertEquals(expexted, actualText);
     }
 
@@ -73,8 +77,9 @@ public class PhoneValidationTest {
     public void shouldSendEmptyPhoneField() {
         driver.findElement(By.tagName("button")).click();
 
-        String actualText = driver.findElement(By.cssSelector(".input_invalid .input__top")).getText();
-        String expexted = "Мобильный телефон";
+        WebElement element = driver.findElement(By.cssSelector("[data-test-id='phone']"));
+        String actualText = element.findElement(By.cssSelector(".input_invalid .input__sub")).getText();
+        String expexted = "Поле обязательно для заполнения";
         assertEquals(expexted, actualText);
     }
 }
